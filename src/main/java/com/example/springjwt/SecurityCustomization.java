@@ -32,22 +32,47 @@ public class SecurityCustomization {
     @Autowired
     UserRepo userRepo;
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
+//    {
+//        http
+//                .csrf(cs-> cs.ignoringRequestMatchers("/req"))
+//                .authorizeHttpRequests(auth ->
+//
+//               auth
+//
+//                       .requestMatchers("/getalluser","/admin").hasAuthority("admin")
+//                       .anyRequest().permitAll()
+//                )
+//                .formLogin(form->form.defaultSuccessUrl("/index.html",true));
+//                 http.httpBasic(Customizer.withDefaults());
+//        return http.build();
+//    }
+
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
-    {
-        http
-                .csrf(cs-> cs.ignoringRequestMatchers("/req"))
-                .authorizeHttpRequests(auth ->
+    public SecurityFilterChain sfc(HttpSecurity httpSecurity) throws Exception {
 
-               auth
+        httpSecurity
+                .authorizeHttpRequests(auth->{
+                    auth
+//
 
-                       .requestMatchers("/getalluser","/admin").hasAuthority("admin")
-                       .anyRequest().permitAll()
-                )
+                            .requestMatchers("/getallusers","/approvalwindow").hasAuthority("admin")
+                            .requestMatchers("/onlyregistered").authenticated()
+                            .anyRequest().permitAll();
+                    ;
+
+
+
+                })
+                .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form->form.defaultSuccessUrl("/index.html",true));
-                 http.httpBasic(Customizer.withDefaults());
-        return http.build();
+
+        return httpSecurity.build();
     }
+
+
     @Bean
    public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
