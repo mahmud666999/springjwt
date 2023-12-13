@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lessgo - Homepage</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .topbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a:hover {
+            color: lightgray;
+        }
+
+        .slideshow-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        img {
+            width: 100%;
+            height: 100%; /* Set a fixed height for the images */
+            object-fit: cover;
+        }
+
+        .text {
+            color: #fff;
+            font-size: 18px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+<div class="topbar">
+    <a href="#" class="logo">lessgo</a>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        <a href="http://localhost:8080/index.html">Index</a>
+        <a href="http://localhost:8080/approvalwindow">Approve</a>
+        <a href="http://localhost:8080/bookedshows">Booked Shows</a>
+        <a href="http://localhost:8080/logout">Logout</a>
+    </div>
+
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <img src="https://businesspostbd.com/files/media/daily-media/2022/06/11/13.jpg" alt="Image 1">
+            <div class="text">
+                <button onclick="bookShow(1)">Book show</button>
+            </div>
+        </div>
+
+        <div class="mySlides fade">
+            <img src="https://cosmosgroup.sgp1.digitaloceanspaces.com/news/3130094_New%20Project%20-%202022-06-10T171149.770.jpg" alt="Image 2">
+            <div class="text">
+                <button onclick="bookShow(2)">Book show</button>
+            </div>
+        </div>
+
+        <div class="mySlides fade">
+            <img src="https://ecdn.dhakatribune.net/contents/cache/images/900x0x1/uploads/dten/2023/03/09/joy-bangla-concert-feature.jpeg" alt="Image 3">
+            <div class="text">
+                <button onclick="bookShow(3)">Book show</button>
+            </div>
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <div style="text-align:center">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <!-- Add dots for each slide -->
+        </div>
+
+    </div>
+</div>>
+
+    <div class="footer">
+    <p>Contact info: mahmud.hassan@g.bracu.ac.bd</p>
+</div>
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function showSlides(n) {
+        const slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
+
+    function bookShow(id) {
+        // Perform a GET request using fetch
+        fetch(`http://localhost:8080/requestbooking/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json', // Modify the content type if needed
+                // Add any other headers as required
+            },
+            // You can include credentials like 'same-origin', 'include', or 'omit' if needed
+            credentials: 'same-origin'
+            // Add a body if it's a POST request, but for a GET request, it's usually empty
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                // Handle the response if needed
+                return response.json(); // Parse the response JSON if applicable
+            })
+            .then(data => {
+                // Handle the data received from the server if needed
+                console.log('GET request successful:', data);
+                // Perform any additional actions with the data received
+            })
+            .catch(error => {
+                // Handle errors occurred during the fetch request
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    function showSlides(n) {
+        const slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
+
+</script>
+</body>
+
+</html>

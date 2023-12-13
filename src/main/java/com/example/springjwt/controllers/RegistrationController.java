@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +16,25 @@ public class RegistrationController {
     RegisterDatabase registerDatabase;
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    RolesRepo rolesRepo;
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    RolesRepo rolesRepo;
+    @Autowired
+    FeedbackDatabase feedbackDatabase;
 
     @PostMapping("/req")
     void registrationRequest(@RequestBody RegistryRequest request){
         System.out.println("Request came");
-     registerDatabase.save(request);
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
+        registerDatabase.save(request);
         System.out.println(request.getFirstname());
         System.out.println("successfully Registered");
     }
+
+
 
     @GetMapping("/sampleregistration")
     RegistryRequest sample(){
@@ -58,14 +65,20 @@ public class RegistrationController {
         user.setUsername(req.getUsername());
         user.setPassword(req.getPassword());
         ArrayList<CustomRoles> roles= new ArrayList<>();
-        roles.add(new CustomRoles("user"));
+        roles.add(rolesRepo.findById(2).get());
         user.setRoles(roles);
-        user.setPassword(passwordEncoder.encode(req.getPassword()));
+        user.setPassword(req.getPassword());
         userRepo.save(user);
         registerDatabase.deleteById(id);
-
-
     }
 
+
+
+
+    @GetMapping(value = "/username")
+    @ResponseBody
+    public String currentUserName(Principal principal) {
+        return principal.getName();
+    }
 
 }

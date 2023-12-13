@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch Feedback Data and Create Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .topbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #999;
+            padding-top: 50px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            display: block;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        #feedback-table {
+            margin-left: 220px; /* Adjust to accommodate the sidebar width */
+            width: 60%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        #feedback-table th,
+        #feedback-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #feedback-table th {
+            background-color: #f2f2f2;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - 200px); /* Adjust to accommodate the sidebar width */
+            margin-left: 200px; /* Adjust to accommodate the sidebar width */
+        }
+    </style>
+</head>
+
+<body>
+logout
+<div class="topbar">
+    <a href="#" class="logo">lessgo</a>
+</div>
+
+<div class="sidebar">
+    <a href="http://localhost:8080/index">Index</a>
+    <a href="http://localhost:8080/logout">Logout</a>
+    <!-- Add more links as needed -->
+</div>
+
+<table id="feedback-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Feedback</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<div class="footer">
+    <p>Contact info: mahmud.hassan@g.bracu.ac.bd</p>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('http://localhost:8080/getallfeedbacks')
+            .then(response => response.json())
+            .then(data => {
+                createFeedbackTable(data);
+            })
+            .catch(error => {
+                console.error('Error fetching feedback data:', error);
+            });
+
+        function createFeedbackTable(data) {
+            const tableBody = document.querySelector('#feedback-table tbody');
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                            <td>${item.id}</td>
+                            <td>${item.feedback}</td>
+                        `;
+                tableBody.appendChild(row);
+            });
+        }
+    });
+</script>
+</body>
+
+</html>

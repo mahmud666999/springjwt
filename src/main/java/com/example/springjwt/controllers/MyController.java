@@ -1,15 +1,22 @@
 package com.example.springjwt.controllers;
 
+import com.example.springjwt.CustomRoles;
 import com.example.springjwt.RolesRepo;
 import com.example.springjwt.UserEntity;
 import com.example.springjwt.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -37,7 +44,21 @@ public class MyController {
 
     @GetMapping("/sampleuser")
     public  UserEntity sample(){
-        return new UserEntity();
+        UserEntity user=new UserEntity();
+        user.setUsername("Test");
+        user.setPassword("Hahaha");
+        CustomRoles role= new CustomRoles("Testing");
+        List <CustomRoles> roles= new ArrayList<>();
+        roles.add(role);
+        user.setRoles(roles);
+        return user;
+    }
+
+    @GetMapping("/current")
+    public String currentUser(Authentication authentication){
+        if (authentication==null) return "Not authenticated";
+     List<String> list= authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+      return list.get(0);
     }
 
     @PostMapping

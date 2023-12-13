@@ -1,54 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Booking Web App</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Lessgo - Homepage</title>
+    <style>
+        /* Common styles for the entire page */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Topbar styles */
+        .topbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        /* Box styles */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            justify-items: center;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Individual box colors */
+        .box1 { background-color: #f44336; }
+        .box2 { background-color: #2196F3; }
+        .box3 { background-color: #4CAF50; }
+        .box4 { background-color: #FF9800; }
+
+        /* Footer styles */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+    </style>
 </head>
+
 <body>
-<header>
-    <div class="logo">
-        <a href="index.html">YourLogo</a>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#bookings">Bookings</a></li>
-            <li><a href="#profile">Profile</a></li>
-        </ul>
-    </nav>
-    <div class="search-bar">
-        <input type="text" placeholder="Search events...">
-        <button type="submit">Search</button>
-    </div>
-</header>
 
-<main>
-    <section class="featured-events">
-        <!-- Featured events go here -->
-    </section>
-    <section class="event-categories">
-        <!-- Categories or filters go here -->
-    </section>
-    <section class="event-listings">
-        <!-- Event listings go here -->
-    </section>
-</main>
+<div class="topbar">
+    <a href="#" class="logo">lessgo</a>
+</div>
 
-<footer>
-    <div class="footer-content">
-        <div class="quick-links">
-            <!-- Quick links go here -->
-        </div>
-        <div class="contact-info">
-            <!-- Contact information goes here -->
-        </div>
-        <div class="policies">
-            <!-- Policies go here -->
-        </div>
-    </div>
-</footer>
+<div class="container">
+    <div class="box box1" onclick="redirectTo('http://localhost:8080/profile')">User Profile</div>
+    <div class="box box2" onclick="redirectTo('http://localhost:8080/booking')">Book a Show</div>
+    <div class="box box3" onclick="redirectTo('http://localhost:8080/payment')">Make Payment</div>
+    <div class="box box4" onclick="redirectTo('http://localhost:8080/feedback')">Feedback</div>
+</div>
+
+<script>
+    // Function to redirect to specified URL
+    function redirectTo(url) {
+        window.location.href = url;
+    }
+</script>
+
+<div class="footer">
+    <p>Contact info: mahmud.hassan@g.bracu.ac.bd</p>
+</div>
 </body>
+
 </html>

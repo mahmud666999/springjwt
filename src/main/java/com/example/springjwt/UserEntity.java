@@ -22,7 +22,7 @@ public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
-    @SequenceGenerator(name="user_id_generator", sequenceName = "user_id_generator", allocationSize=1)
+    @SequenceGenerator(name="user_id_generator", sequenceName = "user_id_generator", allocationSize=1,initialValue = 21)
     @Column(name = "id")
     private int id;
     private String username;

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lessgo - Homepage</title>
+  <style>
+    /* Add your CSS styles here */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .topbar {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+      width: 200px;
+      background-color: #999;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+
+    .sidebar a:hover {
+      color: lightgray;
+    }
+
+    .feedback-form {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .feedback-input {
+      width: 500px;
+      height: 200px;
+      padding: 10px;
+      font-size: 16px;
+      resize: none; /* Prevent resizing of textarea */
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .submit-btn:hover {
+      background-color: #555;
+    }
+
+    .footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="topbar">
+  <a href="#" class="logo">lessgo</a>
+</div>
+
+<div class="container">
+  <div class="sidebar">
+    <a href="http://localhost:8080/index.html">Index</a>
+    <a href="http://localhost:8080/approvalwindow">Approve</a>
+    <a href="http://localhost:8080/bookedshows">Booked Shows</a>
+    <a href="http://localhost:8080/logout">Logout</a>
+  </div>
+
+  <div class="feedback-form">
+    <form id="feedbackForm">
+      <textarea class="feedback-input" id="feedbackInput" placeholder="Enter your feedback"></textarea>
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Contact info: mahmud.hassan@g.bracu.ac.bd</p>
+</div>
+
+<script>
+  // JavaScript code to handle form submission
+  document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the feedback input value
+    const feedback = document.getElementById('feedbackInput').value;
+
+    // Prepare the data to send in the POST request
+    const data = {
+      id: 1,
+      feedback: feedback
+    };
+
+    // Send a POST request using fetch
+    fetch('http://localhost:8080/feedbackpost', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+            .then(response => {
+              // Handle the response from the server
+              // For example, you can show a success message to the user
+              console.log('Feedback submitted successfully');
+            })
+            .catch(error => {
+              // Handle any errors that occur during the fetch
+              console.error('Error:', error);
+            });
+  });
+</script>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 package com.example.springjwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +19,8 @@ public class CustomUserDetails implements UserDetailsService {
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Authentication authentication;
+
         UserEntity userDetails = userRepo.findUserEntityByUsername(username).orElseThrow(()->new UsernameNotFoundException("Username not found"));
         return new User(userDetails.getUsername(),userDetails.getPassword(),userDetails.getAuthorities());
     }

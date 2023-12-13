@@ -67,7 +67,9 @@ public class SecurityCustomization {
 
                 })
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(form->form.defaultSuccessUrl("/index.html",true));
+                .formLogin(form->form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/index.html",true));
 
         return httpSecurity.build();
     }

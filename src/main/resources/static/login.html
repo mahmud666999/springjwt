@@ -1,21 +1,69 @@
-<html>
-<head></head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <body>
-<h1>Login</h1>
-<form name='f' action="login" method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type='text' name='username' value=''></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password' /></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-        </tr>
-    </table>
-</form>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">Lessgo!</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+            <!-- Display error message for invalid username or password -->
+            <div id="error" class="alert alert-danger" style="display: none;">Invalid Username or Password</div>
+
+            <!-- Display logout message -->
+            <div id="logout" class="alert alert-success" style="display: none;">You have been logged out.</div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Login</h2>
+                </div>
+                <div class="card-body">
+                    <form id="loginForm" method="post" role="form" action="/login" class="form-horizontal">
+                        <div class="form-group mb-3">
+                            <label class="control-label"> Username</label>
+                            <input type="text" id="username" name="username" class="form-control" placeholder="Enter username">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label"> Password</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter password">
+                        </div>
+                        <div class="form-group mb-3">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <a href="http://localhost:8080/forgotpassword" class="btn btn-secondary">Forgot Password</a>
+                            <a href="http://localhost:8080/data" class="btn btn-info">Register New User</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript to display error or logout messages based on URL parameters -->
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('error')) {
+        document.getElementById('error').style.display = 'block';
+    }
+    if (urlParams.has('logout')) {
+        document.getElementById('logout').style.display = 'block';
+    }
+</script>
 </body>
 </html>

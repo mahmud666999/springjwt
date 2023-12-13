@@ -21,6 +21,10 @@ public class Show {
     private String show_name;
     private String location;
     private LocalDateTime time;
+    private int price;
+
+    @Lob //For Image
+    private byte[] imageData;
     @ManyToMany(mappedBy = "booked_shows", fetch = FetchType.EAGER)
     List<UserEntity> spectators= new ArrayList<>();
 

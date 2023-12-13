@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update User</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+    }
+    nav {
+      background-color: #333;
+      color: #fff;
+      width: 200px;
+      padding: 20px;
+    }
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    nav ul li {
+      margin-bottom: 10px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+    }
+    /* Rest of your table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+    td {
+      background-color: #fff;
+    }
+    tr:nth-child(even) td {
+      background-color: #f9f9f9;
+    }
+    tr:hover td {
+      background-color: #eaeaea;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="http://localhost:8080/home.html">Home</a></li>
+    <li><a href="http://localhost:8080/index.html">Index</a></li>
+    <li><a href="http://localhost:8080/logout">Logout</a></li>
+  </ul>
+</nav>
+
+<main>
+  <table id="data-table" border="1">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Approval State</th>
+      <!-- Will be adding other info -->
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="redirectToNewPage()">Register New User</button>
+</main>
+
+<script>
+
+  function redirectToNewPage() {
+    // Primary registration page
+    window.location.href = 'registration.html';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost:8080/getresetrequests') // to be updated after frontend completes
+            .then(response => response.json())
+            .then(data => {
+              createTable(data);
+            })
+            .catch(error => {
+              console.error('Error fetching data:', error);
+            });
+
+    function createTable(data) {
+      const tableBody = document.querySelector('#data-table tbody');
+
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.id} </td>
+            <td>${item.firstname}</td>
+            <td>${item.lastname}</td>
+            <td>${item.username}</td>
+            <td>${item.password}</td>
+            <td><button onclick="handleButtonClick(this, ${item.id})">Approve Request</button></td>
+            <!-- For other fields-->
+          `;
+        tableBody.appendChild(row);
+      });
+    }
+  });
+
+  function handleButtonClick(button,id) {
+    // Change button color to green
+    button.style.backgroundColor = "green";
+
+    // Disable the button
+    button.disabled = true;
+
+    // Optionally, you can remove the onclick attribute to prevent further clicks
+    button.removeAttribute("onclick");
+
+
+    fetch(`http://localhost:8080/update/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Permit data received:', data);
+              // Remove the row associated with the approved item
+
+            })
+            .catch(error => {
+              console.error('There was an error with the fetch request:', error);
+              // Must Handle errors here
+            });
+
+
+  }
+
+
+
+  function fetchPermitById(button,id) {
+
+    // Change button color to green
+    button.style.backgroundColor = "green";
+
+    // Disable the button
+    button.disabled = true;
+
+    button.removeAttribute("onclick");
+
+
+  }
+</script>
+</body>
+</html>

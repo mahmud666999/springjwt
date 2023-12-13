@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Add Show Details</h1>
+
+<form id="showForm" enctype="multipart/form-data">
+    <label for="showName">Show Name:</label><br>
+    <input type="text" id="showName" name="showName"><br><br>
+
+    <label for="showDate">Show Date:</label><br>
+    <input type="date" id="showDate" name="showDate"><br><br>
+
+    <label for="showTime">Show Time:</label><br>
+    <input type="time" id="showTime" name="showTime"><br><br>
+
+    <label for="ticketPrice">Ticket Price:</label><br>
+    <input type="number" id="ticketPrice" name="ticketPrice"><br><br>
+
+    <label for="showImage">Upload Image:</label><br>
+    <input type="file" id="showImage" name="showImage" accept="image/*"><br><br>
+
+    <button type="button" onclick="submitShowDetails()">Submit</button>
+</form>
+
+</body>
+</html>
+
+
+//boundary
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>User Registration</h2>
+    <form id="postDataForm">
+        <div class="form-group">
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+        </div>
+
+        <div class="form-group">
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password"> Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Register">
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('postDataForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('http://localhost:8080/req', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Request succeeded with JSON response:', data);
+                // You can handle the response here
+            })
+            .catch(error => {
+                console.error('There was an error with the fetch request:', error);
+                // Handle errors here
+            });
+    });
+</script>
+</body>
+</html>

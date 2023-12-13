@@ -24,6 +24,14 @@ public class HtmlController {
         return modelandview;
     }
 
+
+    @GetMapping("/feedback")
+    public ModelAndView feedback() {
+        ModelAndView modelandview = new ModelAndView();
+        modelandview.setViewName("feedback.html");
+        return modelandview;
+    }
+
     @GetMapping("/index")
     public ModelAndView index() {
         ModelAndView modelandview = new ModelAndView();
@@ -31,10 +39,39 @@ public class HtmlController {
         return modelandview;
     }
 
+    @GetMapping("/booking")
+    public ModelAndView booking() {
+        ModelAndView modelandview = new ModelAndView();
+        modelandview.setViewName("booking.html");
+        return modelandview;
+    }
+
+
     @GetMapping("/")
     public ModelAndView home() {
         ModelAndView modelandview = new ModelAndView();
-        modelandview.setViewName("index.html");
+        modelandview.setViewName("home.html");
+        return modelandview;
+    }
+
+    @GetMapping("/login")
+    public ModelAndView login() {
+        ModelAndView modelandview = new ModelAndView();
+        modelandview.setViewName("login.html");
+        return modelandview;
+    }
+
+    @GetMapping("/forgotpassword")
+    public ModelAndView passwordreset() {
+        ModelAndView modelandview = new ModelAndView();
+        modelandview.setViewName("forgotpassword.html");
+        return modelandview;
+    }
+
+    @GetMapping("/updateusers")
+    public ModelAndView updateusers() {
+        ModelAndView modelandview = new ModelAndView();
+        modelandview.setViewName("updateusers.html");
         return modelandview;
     }
 
