@@ -17,7 +17,7 @@ public class Populator {
     UserRepo userRepo;
     @Autowired
     PasswordEncoder passwordEncoder;
-
+//Populated the admin and a test user. 
     @PostConstruct
     public void populate(){
         CustomRoles role= new CustomRoles("admin");
