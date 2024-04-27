@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+//handled in the frontend
 @Entity
 @Data
 public class ResetRequest {
