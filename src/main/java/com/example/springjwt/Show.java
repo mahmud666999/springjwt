@@ -27,5 +27,6 @@ public class Show {
     private byte[] imageData;
     @ManyToMany(mappedBy = "booked_shows", fetch = FetchType.EAGER)
     List<UserEntity> spectators= new ArrayList<>();
+    //incomplete
 
 }
