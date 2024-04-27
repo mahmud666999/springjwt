@@ -14,7 +14,7 @@ public class PasswordResetController {
     PasswordEncoder passwordEncoder;
     @Autowired
     ResetDatabase resetDatabase;
-
+//updated the frontend
     @PostMapping("/resetrequest")
     void resetRequest(@RequestBody ResetRequest request){
         System.out.println("Request came");
